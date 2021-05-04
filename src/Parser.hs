@@ -1,4 +1,4 @@
-
+module Parser where
 
 data Parser a = Parser
     { run :: String -> Res a }
@@ -43,9 +43,22 @@ parseMany p = sequence . map p
 specificChar :: Char -> Parser Char
 specificChar = is . (==)
 
-isDigit :: Parser Char
-isDigit = is $ flip elem ['0'..'9']
+parseDigit :: Parser Char
+parseDigit = is $ flip elem ['0'..'9']
 
+parseDigits :: Parser String
+parseDigits = undefined
 
+arbitraryDigits :: Parser Int
+arbitraryDigits = undefined
 
-main = undefined
+-- TODO: melhorar
+arbitraryDigit :: Parser Int
+arbitraryDigit = (\x -> read [x] :: Int) <$> parseDigit
+
+parseChar :: Parser Char
+parseChar = is $ flip elem (['a'..'z'] <> ['A'..'Z'])
+
+arbitraryChar :: Parser Char
+arbitraryChar = parseChar
+
